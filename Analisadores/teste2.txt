@@ -1,0 +1,16 @@
+starten <test>
+
+int number;
+int facto;
+
+print("Escreva algum numero");
+read(number);
+
+//Comentario Chronos Analisador
+
+facto = facto + 1;
+number = facto + 5;
+print(number);
+print(facto);
+
+fertig

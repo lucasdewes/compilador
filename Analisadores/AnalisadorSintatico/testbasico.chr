@@ -1,0 +1,11 @@
+starten, starten, 1, 6
+tk_op15, <, 1, 8
+id, test, 1, 12
+tk_op16, >, 1, 13
+schr, print, 6, 4
+tk_deli_0, (, 6, 5
+literalbriefe, Escreva algum numero, 6, 29
+tk_deli_1, ), 6, 30
+tk_deli_6, ;, 6, 31
+fertig,
+$

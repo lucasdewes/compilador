@@ -1,0 +1,19 @@
+starten <test>
+
+int facto;
+int number;
+
+print("entre com um numero");
+read(number);
+
+facto = 1;
+
+do
+	facto = facto*number;
+	number = number - 1;
+while(number>1)
+
+print("fatorial: ");
+print(facto);
+
+fertig

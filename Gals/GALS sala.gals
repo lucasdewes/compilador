@@ -1,0 +1,121 @@
+#Options
+GenerateScanner = true
+GenerateParser = true
+Language = Java
+ScannerName = Lexico
+ParserName = Sintatico
+SemanticName = Semantico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+Parser = LL
+#RegularDefinitions
+platz: [\s\n\t]
+briefe: [A-Za-z]
+zahlen: [0-9]
+unterstreichen: ["_"]
+coment: [\0-\41\43-\255]
+litbri: [\0-\9\11-\33\35-\91\93-\255]
+#Tokens
+:{platz}*
+
+: / / [^\n]*
+
+: / \* ({coment} | \* [^/])* \* /
+
+id : ({briefe}|{unterstreichen}) ({briefe}|{zahlen}|{unterstreichen})*
+literalzahl: ({zahlen})+	//numero literal
+literalbriefe: \" ({litbri} | \\ \"|\\ {briefe})* \"	//letra literal
+
+starten = id : "starten"// begin
+fertig = id : "fertig"	//end
+
+//escreva leia
+schr = id : "print"
+lesen = id : "read"
+
+//comandos cond
+ob = id : "if"
+obni = id : "else"
+
+mach = id : "do"
+wah = id : "while"
+ende = id : "end"
+
+integer = id : "int"
+
+//aritmetics & logic
+"("
+")"
+"="
+"+"
+"-"
+"*"
+"/"
+"<"
+">"
+"["
+"]"
+";"
+":"
+#NonTerminals
+<program>
+
+<c_list>
+<declaration>
+
+<schr>
+<lesen>
+
+<condit>
+<ob>
+<obni>
+
+<mach_wied>
+<wah>
+<declar>
+<atrbuit>
+
+<exp_logic>
+<exp_arit>
+
+<string_arit>
+<string_logic>
+
+<exptest>
+#Grammar
+<program>::= starten "<" id ">" <c_list> fertig | î;
+
+<c_list>::= <declaration> <c_list> | î;
+
+<declaration> ::= <schr> | <lesen>| <condit> | <atrbuit>| <mach_wied> | <declar> ;
+
+<schr>::= schr "(" <exptest> ")" ";";
+
+<lesen>::= lesen "(" id ")" ";";
+
+<condit>::= <ob><obni> ende;
+
+<ob> ::= ob "(" <exp_logic> ")" <c_list>;
+
+<obni> ::= obni <c_list> | î;
+
+<mach_wied> ::= <wah>;
+
+<wah>::= mach <c_list> wah "(" <exp_logic> ")";
+
+<declar>::= integer id";";
+
+<atrbuit>::= id "=" <exp_logic> ";";
+
+<exp_logic>::= id <exp_arit> | literalzahl <exp_arit> |"-" <exp_logic> | "+" <exp_logic>
+		| "(" <exp_logic> ")" <exp_arit>;
+
+<exp_arit>::= "-" <exp_logic> | "+" <exp_logic>| "*"<exp_logic>| "/" <exp_logic>
+		| "<" <exp_logic>| ">" <exp_logic> | î;
+
+<string_logic>::=literalbriefe <string_arit>;
+
+<string_arit>::= "+" <string_logic> | î;
+
+<exptest>::= <exp_logic> | <string_logic> ;
